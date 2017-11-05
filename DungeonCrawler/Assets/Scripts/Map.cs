@@ -10,6 +10,7 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public bool[,] map;
+    public int[,] doorMap;
     public GameObject gameData;
     private GameObject floor;
     private GameObject wall;
@@ -22,6 +23,7 @@ public class Map : MonoBehaviour
     private GameObject key;
     private int mapSize;
     private TextAsset textMap;
+    private TextAsset doorTextMap;
 
     public void Start()
     {
@@ -37,24 +39,34 @@ public class Map : MonoBehaviour
         key = (GameObject)Resources.Load("Items/Key", typeof(GameObject));
         gameData = (GameObject)Resources.Load("GameData", typeof(GameObject));
         textMap = (TextAsset)Resources.Load("mapFile", typeof(TextAsset));
+        doorTextMap = (TextAsset)Resources.Load("doorFile", typeof(TextAsset));
 
-        //Read the map file and create a boolean version
-        string[] lines = textMap.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
-        map = new bool[lines.Length, lines.Length];
-        mapSize = lines.Length;
-        int[,] spaces = new int[lines.Length, lines.Length];
-        for (int i = 0; i < lines.Length; i++)
+        //Read the map file and create a boolean version, Read the door map file and creat the int version
+        string[] mapLines = textMap.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        string[] doorMapLines = doorTextMap.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+
+        map = new bool[mapLines.Length, mapLines.Length];
+        doorMap = new int[doorMapLines.Length, doorMapLines.Length];
+        mapSize = mapLines.Length;
+        int[,] spaces = new int[mapLines.Length, mapLines.Length];
+
+        for (int i = 0; i < mapLines.Length; i++)
         {
-            string st = lines[i];
+            string st = mapLines[i];
+            string st2 = doorMapLines[i];
             string[] nums = st.Split(new[] { ',' });
-     
+            string[] nums2 = st2.Split(new[] { ',' });
+
             for (int j = 0; j < nums.Length; j++)
             {
                 int val;
+                int val2;
                 if (int.TryParse(nums[j], out val))
-                    map[i, j] = (1==val);
+                    map[i, j] = (1 == val);
                 else
                     map[i, j] = false;
+                if (int.TryParse(nums2[j], out val2))
+                    doorMap[i, j] = val2;
             }
         }
         gameData.GetComponent<GameData>().map = map;
@@ -139,28 +151,62 @@ public class Map : MonoBehaviour
                     {
                         Instantiate(pillar, new Vector3(i - .5f, .55f, j + .5f), Quaternion.identity);
                     }
-                }                   
+                }  
             }
         }
-        //Create the doors and set them to be impassable to the player (find a neater way to do this later)
-        Instantiate(door, new Vector3(11, .5f, 5), Quaternion.Euler(0, 90, 0));
-        gameData.GetComponent<GameData>().map[11, 5] = false;
-        Instantiate(door, new Vector3(11, .5f, 11), Quaternion.Euler(0, 90, 0));
-        gameData.GetComponent<GameData>().map[11, 11] = false;
-        Instantiate(door, new Vector3(11, .5f, 15), Quaternion.Euler(0, 90, 0));
-        gameData.GetComponent<GameData>().map[11, 15] = false;
-        Instantiate(door, new Vector3(9, .5f, 13), Quaternion.identity);
-        gameData.GetComponent<GameData>().map[9, 13] = false;
-        Instantiate(door, new Vector3(13, .5f, 13), Quaternion.identity);
-        gameData.GetComponent<GameData>().map[13, 13] = false;
 
-        //Create the barred passages
-        Instantiate(cell, new Vector3(10, .5f, 8), Quaternion.Euler(0, 90, 0));
-        gameData.GetComponent<GameData>().map[10, 8] = false;
-        Instantiate(cell, new Vector3(12, .5f, 8), Quaternion.Euler(0, -90, 0));
-        gameData.GetComponent<GameData>().map[12, 8] = false;
+        //Using the door integer array, place the doors and cells on the map
+        for (int i = 0; i < mapSize; i++)
+        {
+            for (int j = 0; j < mapSize; j++)
+            {
+                if (doorMap[i, j] == 1)
+                {
+                    if (map[i, j + 1] || map[i, j - 1]) { 
+                        Instantiate(door, new Vector3(i, .5f, j), Quaternion.Euler(0, 90, 0));
+                        gameData.GetComponent<GameData>().map[i, j] = false;
+                    }
+                    if (map[i + 1, j] || map[i - 1, j])
+                    {
+                        Instantiate(door, new Vector3(i, .5f, j), Quaternion.Euler(0, 0, 0));
+                        gameData.GetComponent<GameData>().map[i, j] = false;
+                    }
+                }
+                if (doorMap[i, j] == 2)
+                {
+                    if (map[i + 1, j] && !map[i - 1, j])
+                    {
+                        Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 90, 0));
+                        gameData.GetComponent<GameData>().map[i, j] = false;
+                    }
+                    if (map[i - 1, j] && !map[i + 1, j])
+                    {
+                        Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, -90, 0));
+                        gameData.GetComponent<GameData>().map[i, j] = false;
+                    }
+                    if (map[i, j+1] && !map[i, j-1])
+                    {
+                        Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 0, 0));
+                        gameData.GetComponent<GameData>().map[i, j] = false;
+                    }
+                    if (map[i, j-1] && !map[i, j+1])
+                    {
+                        Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 180, 0));
+                        gameData.GetComponent<GameData>().map[i, j] = false;
+                    }
+                    else
+                    {
+                        if (map[i, j - 1])
+                        {
+                            Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 180, 0));
+                            gameData.GetComponent<GameData>().map[i, j] = false;
+                        }
+                    }
+                }
+            }
+        }
 
-        //Place items on the map
+        //Place items on the map (need to figure out a way to do this generically later)
         Instantiate(rock, new Vector3(10.25f, .1f, 7.9f), Quaternion.identity);
         Instantiate(key, new Vector3(9.7f, .1f, 8.3f), Quaternion.Euler(0, 105, 0));
     }

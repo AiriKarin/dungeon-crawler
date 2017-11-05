@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿//Airi Karin
+//Github Game Jam
+//Cell
+//11/5/2017
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
