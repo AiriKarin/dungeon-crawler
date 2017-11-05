@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 5ec89c45c03c629499960422f69d06d9
+timeCreated: 1509841399
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - floor: {fileID: 1647320189285248, guid: f20c9d5b3ee692a4d991371b0fc4139a, type: 2}
+  - wall: {fileID: 1920746000994842, guid: e7f03607f8dec7d4ba768191d822a1eb, type: 2}
+  - ceiling: {fileID: 1047779507632358, guid: 742e09f4893092241b40a68e62fe66b2, type: 2}
+  - pillar: {fileID: 1801612649975508, guid: 5f8e4375e1aa83c4893d6320904c0539, type: 2}
+  - molding: {fileID: 1441488110617654, guid: e0acfcba3e1bfac428ee9b51214b8687, type: 2}
+  - door: {fileID: 1159477794787598, guid: abfef5314a9848b49812ef06ea4d03aa, type: 2}
+  - textMap: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
