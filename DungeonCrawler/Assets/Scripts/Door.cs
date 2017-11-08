@@ -54,7 +54,14 @@ public class Door : InteractableObject {
 
     void Update()
     {
-        base.Update();
+        if (gameData.GetComponent<GameData>().playerPos == objectPos + new Vector2(1, 0) || gameData.GetComponent<GameData>().playerPos == objectPos - new Vector2(1, 0) || gameData.GetComponent<GameData>().playerPos == objectPos + new Vector2(0, 1) || gameData.GetComponent<GameData>().playerPos == objectPos - new Vector2(0, 1))
+        {
+            canInteract = true;
+        }
+        else
+        {
+            canInteract = false;
+        }
         transform.position = Vector3.MoveTowards(transform.position, newPos, 2f * Time.deltaTime);
     }
 

@@ -38,12 +38,15 @@ public class InteractableObject : MonoBehaviour {
 
     private void OnMouseExit()
     {
-            rend.material.shader = defaultShader;
+        rend.material.shader = defaultShader;
     }
 
     public void Update()
     {
         if (gameData.GetComponent<GameData>().playerPos == objectPos + new Vector2(1, 0) || gameData.GetComponent<GameData>().playerPos == objectPos - new Vector2(1, 0) || gameData.GetComponent<GameData>().playerPos == objectPos + new Vector2(0, 1) || gameData.GetComponent<GameData>().playerPos == objectPos - new Vector2(0, 1))
+        {
+            canInteract = true;
+        }else if (gameData.GetComponent<GameData>().playerPos == objectPos)
         {
             canInteract = true;
         }else

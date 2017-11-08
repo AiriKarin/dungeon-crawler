@@ -17,5 +17,4 @@ public class Rock : InteractableObject {
             Destroy(gameObject);
         }
     }
-
 }

@@ -24,7 +24,7 @@ public class ItemHandling : MonoBehaviour {
         gameData.GetComponent<GameData>().items[1] = (GameObject)Resources.Load("Items/Key", typeof(GameObject));
         inventoryBox = (Texture2D)Resources.Load("Images/ItemBoundBox");
         rock = (Texture2D)Resources.Load("Images/Rock");
-        key = (Texture2D)Resources.Load("Images/ItemBoundBox");
+        key = (Texture2D)Resources.Load("Images/Key");
     }
 
     private void OnGUI()
@@ -40,7 +40,7 @@ public class ItemHandling : MonoBehaviour {
         }
         if (gameData.GetComponent<GameData>().inventorySpace[1] != null)
         {
-            GUI.DrawTexture(new Rect(Screen.width * .46f - inventoryBox.width / 4, Screen.height * .92f - inventoryBox.height / 4, inventoryBox.width / 2, inventoryBox.height / 2), key);
+            GUI.DrawTexture(new Rect(Screen.width * .46f - key.width / 4, Screen.height * .92f - key.height / 4, key.width / 2, key.height / 2), key);
         }
     }
 

@@ -19,6 +19,7 @@ public class Map : MonoBehaviour
     private GameObject molding;
     private GameObject door;
     private GameObject cell;
+    private GameObject lever;
     private GameObject rock;
     private GameObject key;
     private int mapSize;
@@ -35,6 +36,7 @@ public class Map : MonoBehaviour
         molding = (GameObject)Resources.Load("MapObjects/Molding", typeof(GameObject));
         door = (GameObject)Resources.Load("MapObjects/Door", typeof(GameObject));
         cell = (GameObject)Resources.Load("MapObjects/Cell", typeof(GameObject));
+        lever = (GameObject)Resources.Load("MapObjects/Lever", typeof(GameObject));
         rock = (GameObject)Resources.Load("Items/Rock", typeof(GameObject));
         key = (GameObject)Resources.Load("Items/Key", typeof(GameObject));
         gameData = (GameObject)Resources.Load("GameData", typeof(GameObject));
@@ -206,6 +208,7 @@ public class Map : MonoBehaviour
             }
         }
 
+        Instantiate(lever, new Vector3(9.525f, .5f, 6f), Quaternion.identity);
         //Place items on the map (need to figure out a way to do this generically later)
         Instantiate(rock, new Vector3(10.25f, .1f, 7.9f), Quaternion.identity);
         Instantiate(key, new Vector3(9.7f, .1f, 8.3f), Quaternion.Euler(0, 105, 0));
