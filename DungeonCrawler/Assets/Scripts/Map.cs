@@ -19,9 +19,6 @@ public class Map : MonoBehaviour
     private GameObject molding;
     private GameObject door;
     private GameObject cell;
-    private GameObject lever;
-    private GameObject rock;
-    private GameObject key;
     private int mapSize;
     private TextAsset textMap;
     private TextAsset doorTextMap;
@@ -36,12 +33,11 @@ public class Map : MonoBehaviour
         molding = (GameObject)Resources.Load("MapObjects/Molding", typeof(GameObject));
         door = (GameObject)Resources.Load("MapObjects/Door", typeof(GameObject));
         cell = (GameObject)Resources.Load("MapObjects/Cell", typeof(GameObject));
-        lever = (GameObject)Resources.Load("MapObjects/Lever", typeof(GameObject));
-        rock = (GameObject)Resources.Load("Items/Rock", typeof(GameObject));
-        key = (GameObject)Resources.Load("Items/Key", typeof(GameObject));
         gameData = (GameObject)Resources.Load("GameData", typeof(GameObject));
         textMap = (TextAsset)Resources.Load("mapFile", typeof(TextAsset));
         doorTextMap = (TextAsset)Resources.Load("doorFile", typeof(TextAsset));
+
+        gameData.GetComponent<GameData>().cellPos = new Vector2[5];
 
         //Read the map file and create a boolean version, Read the door map file and creat the int version
         string[] mapLines = textMap.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -180,37 +176,49 @@ public class Map : MonoBehaviour
                     {
                         Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 90, 0));
                         gameData.GetComponent<GameData>().map[i, j] = false;
+                        markCellPos(i, j);
                     }
                     if (map[i - 1, j] && !map[i + 1, j])
                     {
                         Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, -90, 0));
                         gameData.GetComponent<GameData>().map[i, j] = false;
+                        markCellPos(i, j);
                     }
                     if (map[i, j+1] && !map[i, j-1])
                     {
                         Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 0, 0));
                         gameData.GetComponent<GameData>().map[i, j] = false;
+                        markCellPos(i, j);
                     }
                     if (map[i, j-1] && !map[i, j+1])
                     {
                         Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 180, 0));
                         gameData.GetComponent<GameData>().map[i, j] = false;
+                        markCellPos(i,j);
                     }
                     else
                     {
-                        if (map[i, j - 1])
+                        if (map[i, j])
                         {
                             Instantiate(cell, new Vector3(i, .5f, j), Quaternion.Euler(0, 180, 0));
                             gameData.GetComponent<GameData>().map[i, j] = false;
+                            markCellPos(i,j);
                         }
                     }
                 }
             }
         }
+    }
 
-        Instantiate(lever, new Vector3(9.525f, .5f, 6f), Quaternion.identity);
-        //Place items on the map (need to figure out a way to do this generically later)
-        Instantiate(rock, new Vector3(10.25f, .1f, 7.9f), Quaternion.identity);
-        Instantiate(key, new Vector3(9.7f, .1f, 8.3f), Quaternion.Euler(0, 105, 0));
+    void markCellPos(int i,int j)
+    {
+        for (int x = 0; x < 4; x++)
+        {
+            if (gameData.GetComponent<GameData>().cellPos[x] == new Vector2(0, 0))
+            {
+                gameData.GetComponent<GameData>().cellPos[x] = new Vector2(i, j);
+                return;
+            }
+        }
     }
 }

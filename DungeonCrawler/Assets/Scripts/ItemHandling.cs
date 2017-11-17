@@ -36,18 +36,47 @@ public class ItemHandling : MonoBehaviour {
 
         if (gameData.GetComponent<GameData>().inventorySpace[0] != null)
         {
-            GUI.DrawTexture(new Rect(Screen.width * .38f - rock.width / 4, Screen.height * .92f - rock.height / 4, rock.width / 2, rock.height / 2), rock);
+            if (gameData.GetComponent<GameData>().inventorySpace[0] == gameData.GetComponent<GameData>().items[0])
+            {
+                GUI.DrawTexture(new Rect(Screen.width * .38f - rock.width / 4, Screen.height * .92f - rock.height / 4, rock.width / 2, rock.height / 2), rock);
+            }
+            else if (gameData.GetComponent<GameData>().inventorySpace[0] == gameData.GetComponent<GameData>().items[1])
+            {
+                GUI.DrawTexture(new Rect(Screen.width * .38f - rock.width / 4, Screen.height * .92f - rock.height / 4, rock.width / 2, rock.height / 2), key);
+            }
         }
         if (gameData.GetComponent<GameData>().inventorySpace[1] != null)
         {
-            GUI.DrawTexture(new Rect(Screen.width * .46f - key.width / 4, Screen.height * .92f - key.height / 4, key.width / 2, key.height / 2), key);
+            if (gameData.GetComponent<GameData>().inventorySpace[1] == gameData.GetComponent<GameData>().items[0])
+            {
+                GUI.DrawTexture(new Rect(Screen.width * .46f - key.width / 4, Screen.height * .92f - key.height / 4, key.width / 2, key.height / 2), rock);
+            }
+            else if (gameData.GetComponent<GameData>().inventorySpace[1] == gameData.GetComponent<GameData>().items[1])
+            {
+                GUI.DrawTexture(new Rect(Screen.width * .46f - key.width / 4, Screen.height * .92f - key.height / 4, key.width / 2, key.height / 2), key);
+            }
         }
     }
 
     private void Update () {
-        if (Input.GetKeyDown("x")&&!(gameData.GetComponent<GameData>().inventorySpace[0] == null) && (gameData.GetComponent<GameData>().canMove)){
-            Instantiate(gameData.GetComponent<GameData>().items[0], transform.position + new Vector3(0, .1f, 0), Quaternion.identity);
+        if (Input.GetKeyDown("1")&&!(gameData.GetComponent<GameData>().inventorySpace[0] == null) && (gameData.GetComponent<GameData>().canMove)){
+            Instantiate(gameData.GetComponent<GameData>().inventorySpace[0], transform.position + new Vector3(0, .1f, 0), Quaternion.identity);
             gameData.GetComponent<GameData>().inventorySpace[0] = null;
+        }
+        if (Input.GetKeyDown("2") && !(gameData.GetComponent<GameData>().inventorySpace[1] == null) && (gameData.GetComponent<GameData>().canMove))
+        {
+            Instantiate(gameData.GetComponent<GameData>().inventorySpace[1], transform.position + new Vector3(0, .1f, 0), Quaternion.identity);
+            gameData.GetComponent<GameData>().inventorySpace[1] = null;
+        }
+        if (Input.GetKeyDown("3") && !(gameData.GetComponent<GameData>().inventorySpace[2] == null) && (gameData.GetComponent<GameData>().canMove))
+        {
+            Instantiate(gameData.GetComponent<GameData>().inventorySpace[2], transform.position + new Vector3(0, .1f, 0), Quaternion.identity);
+            gameData.GetComponent<GameData>().inventorySpace[2] = null;
+        }
+        if (Input.GetKeyDown("4") && !(gameData.GetComponent<GameData>().inventorySpace[3] == null) && (gameData.GetComponent<GameData>().canMove))
+        {
+            Instantiate(gameData.GetComponent<GameData>().inventorySpace[3], transform.position + new Vector3(0, .1f, 0), Quaternion.identity);
+            gameData.GetComponent<GameData>().inventorySpace[3] = null;
         }
     }
 }

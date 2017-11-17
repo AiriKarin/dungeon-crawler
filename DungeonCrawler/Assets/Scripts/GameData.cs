@@ -13,10 +13,5 @@ public class GameData : MonoBehaviour {
     public bool[,] map;
     public bool canMove;
     public Vector2 playerPos;
-
-    // Use this for initialization
-    public void Start () {
-        this.items = new GameObject[3];
-        this.inventorySpace = new GameObject[3];
-    }
+    public Vector2[] cellPos;
 }

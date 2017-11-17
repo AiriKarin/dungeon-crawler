@@ -25,11 +25,17 @@ public class Door : InteractableObject {
 
     void OnMouseDown()
     {
-        if (gameData.GetComponent<GameData>().inventorySpace[1] != null)
+        if (gameData.GetComponent<GameData>().inventorySpace[0] == gameData.GetComponent<GameData>().items[1])
+        {
+            locked = false;
+            gameData.GetComponent<GameData>().inventorySpace[0] = null;
+        }
+        else if (gameData.GetComponent<GameData>().inventorySpace[1] == gameData.GetComponent<GameData>().items[1])
         {
             locked = false;
             gameData.GetComponent<GameData>().inventorySpace[1] = null;
         }
+
         if (!locked)
         {
             if (transform.position == newPos && gameData.GetComponent<GameData>().playerPos != doorPos && gameData.GetComponent<GameData>().canMove && canInteract)

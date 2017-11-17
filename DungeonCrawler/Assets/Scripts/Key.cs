@@ -13,8 +13,26 @@ public class Key : InteractableObject {
     {
         if (canInteract && gameData.GetComponent<GameData>().map[Mathf.RoundToInt(objectPos.x), Mathf.RoundToInt(objectPos.y)])
         {
-            gameData.GetComponent<GameData>().inventorySpace[1] = gameData.GetComponent<GameData>().items[1];
-            Destroy(gameObject);
+            if (gameData.GetComponent<GameData>().inventorySpace[0] == null)
+            {
+                gameData.GetComponent<GameData>().inventorySpace[0] = gameData.GetComponent<GameData>().items[1];
+                Destroy(gameObject);
+            }
+            else if (gameData.GetComponent<GameData>().inventorySpace[1] == null)
+            {
+                gameData.GetComponent<GameData>().inventorySpace[1] = gameData.GetComponent<GameData>().items[1];
+                Destroy(gameObject);
+            }
+            else if (gameData.GetComponent<GameData>().inventorySpace[2] == null)
+            {
+                gameData.GetComponent<GameData>().inventorySpace[2] = gameData.GetComponent<GameData>().items[1];
+                Destroy(gameObject);
+            }
+            else if (gameData.GetComponent<GameData>().inventorySpace[3] == null)
+            {
+                gameData.GetComponent<GameData>().inventorySpace[3] = gameData.GetComponent<GameData>().items[1];
+                Destroy(gameObject);
+            }
         }
     }
 }

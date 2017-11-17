@@ -28,7 +28,7 @@ public class Lever : InteractableObject {
         if (leverPulled)
         {
             transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, Quaternion.Euler(pulledPos.x, pulledPos.y, pulledPos.z), 200f * Time.deltaTime);
-            gameData.GetComponent<GameData>().map[10, 8] = true;
+            gameData.GetComponent<GameData>().map[Mathf.RoundToInt(gameData.GetComponent<GameData>().cellPos[0].x), Mathf.RoundToInt(gameData.GetComponent<GameData>().cellPos[0].y)] = true;
         }
     }
 }
