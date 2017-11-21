@@ -22,5 +22,10 @@ public class Cell : MonoBehaviour {
             newPos = new Vector3(transform.position.x, 1.4f, transform.position.z);
             transform.position = Vector3.MoveTowards(transform.position, newPos, 2f * Time.deltaTime);
         }
+        else
+        {
+            newPos = new Vector3(transform.position.x, .5f, transform.position.z);
+            transform.position = Vector3.MoveTowards(transform.position, newPos, 2f * Time.deltaTime);
+        }
     }
 }

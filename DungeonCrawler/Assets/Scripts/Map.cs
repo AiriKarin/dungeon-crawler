@@ -10,6 +10,7 @@ using UnityEngine;
 public class Map : MonoBehaviour
 {
     public bool[,] map;
+    public bool[,] switches;
     public int[,] doorMap;
     public GameObject gameData;
     private GameObject floor;
@@ -45,6 +46,7 @@ public class Map : MonoBehaviour
 
         map = new bool[mapLines.Length, mapLines.Length];
         doorMap = new int[doorMapLines.Length, doorMapLines.Length];
+        bool[,] switches = new bool[mapLines.Length, mapLines.Length];
         mapSize = mapLines.Length;
         int[,] spaces = new int[mapLines.Length, mapLines.Length];
 
@@ -68,6 +70,7 @@ public class Map : MonoBehaviour
             }
         }
         gameData.GetComponent<GameData>().map = map;
+        gameData.GetComponent<GameData>().switches = switches;
         generateMap();
     }
 

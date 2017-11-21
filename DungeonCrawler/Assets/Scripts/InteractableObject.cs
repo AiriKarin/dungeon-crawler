@@ -23,7 +23,7 @@ public class InteractableObject : MonoBehaviour {
         objectPos = new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
     }
 
-    private void Awake()
+    public void Awake()
     {
         rend = GetComponent<Renderer>();
     }
