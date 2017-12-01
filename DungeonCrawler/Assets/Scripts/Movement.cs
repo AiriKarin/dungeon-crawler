@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public Transform MyTransform;
     public Vector2 pos = new Vector2(1, 1);
     public Vector2 dir;
     public int rotation;
@@ -17,13 +18,16 @@ public class Movement : MonoBehaviour
     public Vector3 newRot;
     public GameObject gameData;
     public GameObject fireBall;
+    public GameObject waterBall;
     private bool[,] map;
     public int spellTracker;
 
     public void Start()
     {
+        MyTransform = transform;
         gameData = (GameObject)Resources.Load("GameData", typeof(GameObject));
         fireBall = (GameObject)Resources.Load("Items/FireBall", typeof(GameObject));
+        waterBall = (GameObject)Resources.Load("Items/WaterBall", typeof(GameObject));
     }
 
     //Set the players initial positional and rotational values
@@ -83,12 +87,13 @@ public class Movement : MonoBehaviour
             if (spellTracker == 3)
             {
                 Debug.Log("Water Spell");
+                Instantiate(waterBall, MyTransform.position + new Vector3(0, .5f, 0), MyTransform.rotation);
                 spellTracker = 0;
             }
             else if (spellTracker == 5)
             {
                 Debug.Log("Fire Spell");
-                Instantiate(fireBall, transform.position + new Vector3(0,.5f,0), transform.rotation);
+                Instantiate(fireBall, MyTransform.position + new Vector3(0,.5f,0), MyTransform.rotation);
                 spellTracker = 0;
             }
         }
@@ -216,6 +221,16 @@ public class Movement : MonoBehaviour
             pos = startPos;
             canMove = true;
         }
+
+        if (pos != startPos)
+        {
+            footSteps();
+        }
+    }
+
+    void footSteps()
+    {
+        gameObject.GetComponent<AudioSource>().Play();
     }
 
     void Update ()
@@ -225,15 +240,15 @@ public class Movement : MonoBehaviour
         gameData.GetComponent<GameData>().playerPos = pos;
 
         //Move the player to the new position or rotation
-        if (transform.position != newPos)
+        if (MyTransform.position != newPos)
         {
-            transform.position = Vector3.MoveTowards(transform.position, newPos, 3f * Time.deltaTime);
+            MyTransform.position = Vector3.MoveTowards(MyTransform.position, newPos, 2.5f * Time.deltaTime);
         }
-        if (transform.rotation != Quaternion.Euler(newRot.x, newRot.y, newRot.z))
+        if (MyTransform.rotation != Quaternion.Euler(newRot.x, newRot.y, newRot.z))
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(newRot.x, newRot.y, newRot.z), 350f * Time.deltaTime);
+            MyTransform.rotation = Quaternion.RotateTowards(MyTransform.rotation, Quaternion.Euler(newRot.x, newRot.y, newRot.z), 300f * Time.deltaTime);
         }
-        if (transform.position == newPos && transform.rotation == Quaternion.Euler(newRot.x, newRot.y, newRot.z))
+        if (MyTransform.position == newPos && MyTransform.rotation == Quaternion.Euler(newRot.x, newRot.y, newRot.z))
         {
             canMove = true;
         }

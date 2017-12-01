@@ -24,9 +24,12 @@ public class Lever : InteractableObject {
         if (transform.parent.rotation.eulerAngles == unPulledPos)
         {
             leverPulled = true;
-        }else
+            gameObject.GetComponent<AudioSource>().Play();
+        }
+        else
         {
             leverPulled = false;
+            gameObject.GetComponent<AudioSource>().Play();
         }
     }
 
@@ -37,7 +40,8 @@ public class Lever : InteractableObject {
         {
             transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, Quaternion.Euler(pulledPos.x, pulledPos.y, pulledPos.z), 200f * Time.deltaTime);
             gameData.GetComponent<GameData>().switches[Mathf.RoundToInt(objectPos.x), Mathf.RoundToInt(objectPos.y)] = true;
-        }else if (!leverPulled)
+        }
+        else if (!leverPulled)
         {
             transform.parent.rotation = Quaternion.RotateTowards(transform.parent.rotation, Quaternion.Euler(unPulledPos.x, unPulledPos.y, unPulledPos.z), 200f * Time.deltaTime);
             gameData.GetComponent<GameData>().switches[Mathf.RoundToInt(objectPos.x), Mathf.RoundToInt(objectPos.y)] = false;

@@ -11,6 +11,7 @@ public class Map : MonoBehaviour
 {
     public bool[,] map;
     public bool[,] switches;
+    public bool[,] torches;
     public int[,] doorMap;
     public GameObject gameData;
     private GameObject floor;
@@ -24,7 +25,7 @@ public class Map : MonoBehaviour
     private TextAsset textMap;
     private TextAsset doorTextMap;
 
-    public void Start()
+    public void Awake()
     {
         //Load resources necessary to read and generate the dungeon
         floor = (GameObject)Resources.Load("MapObjects/Floor", typeof(GameObject));
@@ -47,6 +48,7 @@ public class Map : MonoBehaviour
         map = new bool[mapLines.Length, mapLines.Length];
         doorMap = new int[doorMapLines.Length, doorMapLines.Length];
         bool[,] switches = new bool[mapLines.Length, mapLines.Length];
+        bool[,] torches = new bool[mapLines.Length, mapLines.Length];
         mapSize = mapLines.Length;
         int[,] spaces = new int[mapLines.Length, mapLines.Length];
 
@@ -71,6 +73,7 @@ public class Map : MonoBehaviour
         }
         gameData.GetComponent<GameData>().map = map;
         gameData.GetComponent<GameData>().switches = switches;
+        gameData.GetComponent<GameData>().torches = torches;
         generateMap();
     }
 

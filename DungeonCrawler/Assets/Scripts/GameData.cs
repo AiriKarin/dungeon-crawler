@@ -11,6 +11,7 @@ public class GameData : MonoBehaviour {
     public GameObject[] items;
     public GameObject[] inventorySpace;
     public bool[,] map;
+    public bool[,] torches;
     public bool[,] switches;
     public bool canMove;
     public Vector2 playerPos;
